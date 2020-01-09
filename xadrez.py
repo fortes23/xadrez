@@ -15,7 +15,7 @@ proc1 = subprocess.Popen(['python3', './bots/randombot.py'],
                          stdout=subprocess.PIPE, stdin=subprocess.PIPE,
                          stderr=subprocess.PIPE)
 
-proc2 = subprocess.Popen(['python3', './bots/randombot.py'],
+proc2 = subprocess.Popen(['python3', './bots/stockfishbot.py'],
                          stdout=subprocess.PIPE, stdin=subprocess.PIPE,
                          stderr=subprocess.PIPE)
 
@@ -37,3 +37,6 @@ while not board.is_game_over():
     print(move)
     print(errs)
     board.push_uci(move)
+
+color = 'WHITE' if board.turn == chess.BLACK else 'BLACK'
+print(color + ' wins!')
