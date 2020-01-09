@@ -12,12 +12,12 @@ board = chess.Board()
 print("Starting to work...\n")
 
 proc1 = subprocess.Popen(['python3', './bots/randombot.py'],
-                        stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-                        stderr=subprocess.PIPE)
+                         stdout=subprocess.PIPE, stdin=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
 
 proc2 = subprocess.Popen(['python3', './bots/randombot.py'],
-                        stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-                        stderr=subprocess.PIPE)
+                         stdout=subprocess.PIPE, stdin=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
 
 while not board.is_game_over():
     print(board)

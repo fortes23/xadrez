@@ -6,10 +6,13 @@ import random
 
 import chess
 
+
 def debug(msg):
     print(msg, file=sys.stderr)
 
+
 debug("Random bot starting!\n")
+
 
 while True:
     fen = input()
