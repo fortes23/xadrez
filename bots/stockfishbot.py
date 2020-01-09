@@ -13,7 +13,7 @@ def debug(msg):
 
 debug("Stockfish bot starting!\n")
 
-s = Stockfish()
+s = Stockfish('./bin/stockfish')
 s.set_skill_level(2)
 
 while True:
