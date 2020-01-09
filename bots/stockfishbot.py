@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import random
 
 from stockfish import Stockfish
 
