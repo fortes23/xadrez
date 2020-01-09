@@ -1,2 +1,0 @@
-python-chess>=0.30.0
-stockfish>=3.5
