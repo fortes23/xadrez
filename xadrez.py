@@ -35,7 +35,6 @@ def main():
     board = chess.Board()
 
     while not board.is_game_over():
-        print(board)
         fen = board.fen() + '\n'
 
         if board.turn:
@@ -52,9 +51,9 @@ def main():
         print(move)
         print(errs)
         board.push_uci(move)
+        print(board.unicode(invert_color=True))
 
-    color = 'WHITE' if board.turn == chess.BLACK else 'BLACK'
-    print(color + ' wins!')
+    print(board.result())
 
 
 if __name__ == '__main__':
