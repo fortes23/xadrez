@@ -13,26 +13,81 @@ def debug(msg):
 
 debug("BF bot starting!\n")
 
+pawn_weight_pos = [0, 0, 0, 0, 0, 0, 0, 0,
+                   5, 10, 10, -20, -20, 10, 10, 5,
+                   5, -5, -10, 0, 0, -10, -5, 5,
+                   0, 0, 0, 20, 20, 0, 0, 0,
+                   5, 5, 10, 25, 25, 10, 5, 5,
+                   10, 10, 20, 30, 30, 20, 10, 10,
+                   50, 50, 50, 50, 50, 50, 50, 50,
+                   0, 0, 0, 0, 0, 0, 0, 0]
+
+knights_weight_pos = [-50, -40, -30, -30, -30, -30, -40, -50,
+                      -40, -20, 0, 5, 5, 0, -20, -40,
+                      -30, 5, 10, 15, 15, 10, 5, -30,
+                      -30, 0, 15, 20, 20, 15, 0, -30,
+                      -30, 5, 15, 20, 20, 15, 5, -30,
+                      -30, 0, 10, 15, 15, 10, 0, -30,
+                      -40, -20, 0, 0, 0, 0, -20, -40,
+                      -50, -40, -30, -30, -30, -30, -40, -50]
+
+bishops_weight_pos = [-20, -10, -10, -10, -10, -10, -10, -20,
+                      -10, 5, 0, 0, 0, 0, 5, -10,
+                      -10, 10, 10, 10, 10, 10, 10, -10,
+                      -10, 0, 10, 10, 10, 10, 0, -10,
+                      -10, 5, 5, 10, 10, 5, 5, -10,
+                      -10, 0, 5, 10, 10, 5, 0, -10,
+                      -10, 0, 0, 0, 0, 0, 0, -10,
+                      -20, -10, -10, -10, -10, -10, -10, -20]
+
+rooks_weight_pos = [0, 0, 0, 5, 5, 0, 0, 0,
+                    -5, 0, 0, 0, 0, 0, 0, -5,
+                    -5, 0, 0, 0, 0, 0, 0, -5,
+                    -5, 0, 0, 0, 0, 0, 0, -5,
+                    -5, 0, 0, 0, 0, 0, 0, -5,
+                    -5, 0, 0, 0, 0, 0, 0, -5,
+                    5, 10, 10, 10, 10, 10, 10, 5,
+                    0, 0, 0, 0, 0, 0, 0, 0]
+
+queens_weight_pos = [-20, -10, -10, -5, -5, -10, -10, -20,
+                     -10, 0, 0, 0, 0, 0, 0, -10,
+                     -10, 5, 5, 5, 5, 5, 0, -10,
+                     0, 0, 5, 5, 5, 5, 0, -5,
+                     -5, 0, 5, 5, 5, 5, 0, -5,
+                     -10, 0, 5, 5, 5, 5, 0, -10,
+                     -10, 0, 0, 0, 0, 0, 0, -10,
+                     -20, -10, -10, -5, -5, -10, -10, -20]
+
+kings_weight_pos = [20, 30, 10, 0, 0, 10, 30, 20,
+                    20, 20, 0, 0, 0, 0, 20, 20,
+                    -10, -20, -20, -20, -20, -20, -20, -10,
+                    -20, -30, -30, -40, -40, -30, -30, -20,
+                    -30, -40, -40, -50, -50, -40, -40, -30,
+                    -30, -40, -40, -50, -50, -40, -40, -30,
+                    -30, -40, -40, -50, -50, -40, -40, -30,
+                    -30, -40, -40, -50, -50, -40, -40, -30]
 
 weight_pieces = {
-    'p': 1,
-    'n': 3,
-    'b': 3,
-    'r': 5,
-    'q': 9,
-    'k': 90
+    'p': {"mat": 10, "pos": pawn_weight_pos},
+    'n': {"mat": 30, "pos": knights_weight_pos},
+    'b': {"mat": 30, "pos": bishops_weight_pos},
+    'r': {"mat": 50, "pos": rooks_weight_pos},
+    'q': {"mat": 90, "pos": queens_weight_pos},
+    'k': {"mat": 900, "pos": kings_weight_pos}
 }
 
 
-def get_weigth_piece(name):
-    return weight_pieces[str(name).lower()]
+def get_weigth_piece(name, pos):
+    return weight_pieces[name]['mat'] + weight_pieces[name]['pos'][pos]
 
 
 def eval_fn(board):
     res = 0
     for p in chess.PIECE_TYPES:
-        res += len(board.pieces(p, chess.WHITE)) * get_weigth_piece(chess.piece_symbol(p))
-        res -= len(board.pieces(p, chess.BLACK)) * get_weigth_piece(chess.piece_symbol(p))
+        for wp in board.pieces(p, chess.WHITE):
+            res += get_weigth_piece(chess.piece_symbol(p), wp)
+        for bp in board.pieces(p, chess.BLACK):
+            res -= get_weigth_piece(chess.piece_symbol(p), chess.square_mirror(bp))
 
     return res
 
