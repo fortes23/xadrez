@@ -41,7 +41,7 @@ def eval_fn(board):
     return res
 
 
-def minimax(board, depth, _maximize):
+def minimax(board, depth, _maximize, alpha, beta):
 
     if board.is_checkmate():
         return ((-1)**_maximize * 10000, None)
@@ -59,15 +59,20 @@ def minimax(board, depth, _maximize):
     for m in legal_moves:
         aux_b = board.copy()
         aux_b.push_uci(m.uci())
-        sub_score = minimax(aux_b, depth-1, not _maximize)[0]
+        sub_score = minimax(aux_b, depth-1, not _maximize, alpha, beta)[0]
         if _maximize:
+            alpha = max(alpha, sub_score)
             sb = sub_score - best_score
         else:
+            beta = min(beta, sub_score)
             sb = best_score - sub_score
 
         if sb > 0:
             best_score = sub_score
             res = m.uci()
+
+        if alpha >= beta:
+            break
 
     return (best_score, res)
 
@@ -80,7 +85,7 @@ while True:
     moves = list(board.legal_moves)
 
     # Get best movement
-    (best, m) = minimax(board, 2, board.turn)
+    (best, m) = minimax(board, 3, board.turn, -99999999, 99999999)
     debug(f"Best played {best}")
 
     print(m)
