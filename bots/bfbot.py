@@ -24,20 +24,16 @@ weight_pieces = {
 }
 
 
-def get_piece_val(board, sq):
-    p = board.piece_at(sq)
-    if p:
-        if p.color:
-            return weight_pieces[str(p).lower()]
-        else:
-            return -weight_pieces[str(p).lower()]
-    return 0
+def get_weigth_piece(name):
+    return weight_pieces[str(name).lower()]
 
 
 def eval_fn(board):
     res = 0
-    for sq in chess.SQUARES:
-        res += get_piece_val(board, sq)
+    for p in chess.PIECE_TYPES:
+        res += len(board.pieces(p, chess.WHITE)) * get_weigth_piece(chess.piece_symbol(p))
+        res -= len(board.pieces(p, chess.BLACK)) * get_weigth_piece(chess.piece_symbol(p))
+
     return res
 
 
