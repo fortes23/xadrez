@@ -11,6 +11,8 @@ import chess
 
 def parser_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-b', '--board', help='Show board', action='store_true')
+    parser.add_argument('-d', '--debug', help='Show debug messages', action='store_true')
     _required = parser.add_argument_group('Required args')
     _required.add_argument('-b1', '--bot1', help='Executable bot 1',
                            action='store', required=True)
@@ -44,14 +46,17 @@ def main():
 
         os.write(proc.stdin.fileno(), fen.encode())
         outs = os.read(proc.stdout.fileno(), 4096)
-        errs = os.read(proc.stderr.fileno(), 4096)
 
         move = outs.decode('utf-8').replace('\n', '')
-
         print(move)
-        print(errs)
         board.push_uci(move)
-        print(board.unicode(invert_color=True))
+
+        if args.debug:
+            errs = os.read(proc.stderr.fileno(), 4096)
+            print(errs)
+
+        if args.board:
+            print(board.unicode(invert_color=True))
 
     print(board.result())
 
