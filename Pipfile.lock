@@ -18,11 +18,11 @@
     "default": {
         "python-chess": {
             "hashes": [
-                "sha256:5ac092f44d154bab9fd5db6d963957c8a5a6d1db122da2f1605aa4240ad37c5a",
-                "sha256:a3cfe558d496251c032da55fe8b0c2fa51f0a05a64ddc16bcf44dc875e4dab40"
+                "sha256:a91eb86a665703e109b23839170371fb50070bf06293cec067217bd8851ffa84",
+                "sha256:c472053f4e89f3bc3e3ce09f606192cfb0ccc1e5894e60b3ed1d16c08f946bc6"
             ],
             "index": "pypi",
-            "version": "==0.30.0"
+            "version": "==0.30.1"
         },
         "stockfish": {
             "hashes": [
