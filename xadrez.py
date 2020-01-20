@@ -49,7 +49,6 @@ def main():
 
         move = outs.decode('utf-8').replace('\n', '')
         print(move)
-        board.push_uci(move)
 
         if args.debug:
             errs = os.read(proc.stderr.fileno(), 4096)
@@ -57,6 +56,8 @@ def main():
 
         if args.board:
             print(board.unicode(invert_color=True))
+
+        board.push_uci(move)
 
     print(board.result())
 
