@@ -22,7 +22,6 @@ with open("bots/hegaluze/hegaluze.json", "r") as f:
     bot = jsf["population"][0]
 
 
-
 def get_weigth_piece(name, pos):
     return bot["weight"][name][pos]
 
