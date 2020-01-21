@@ -56,10 +56,10 @@ def main():
             errs = os.read(proc.stderr.fileno(), 4096)
             print(errs)
 
+        board.push_uci(move)
+
         if args.board:
             print(board.unicode(invert_color=True))
-
-        board.push_uci(move)
 
     print(board.result())
 
