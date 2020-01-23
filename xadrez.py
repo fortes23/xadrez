@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
 import argparse
-import subprocess
 
-
-import chess
+from xadrez.pool import Pool
 
 
 def parser_args():
@@ -28,40 +25,9 @@ def main():
     print("Starting to work...\n")
     args = parser_args()
 
-    proc1 = subprocess.Popen([args.bot1],
-                             stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-
-    proc2 = subprocess.Popen([args.bot2],
-                             stdout=subprocess.PIPE, stdin=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-
-    board = chess.Board(args.fen)
-
-    while not board.is_game_over():
-        fen = board.fen() + '\n'
-
-        if board.turn:
-            proc = proc1
-        else:
-            proc = proc2
-
-        os.write(proc.stdin.fileno(), fen.encode())
-        outs = os.read(proc.stdout.fileno(), 4096)
-
-        move = outs.decode('utf-8').replace('\n', '')
-        print(move)
-
-        if args.debug:
-            errs = os.read(proc.stderr.fileno(), 4096)
-            print(errs)
-
-        board.push_uci(move)
-
-        if args.board:
-            print(board.unicode(invert_color=True))
-
-    print(board.result())
+    p = Pool(bot1=args.bot1, bot2=args.bot2, fen=args.fen,
+             debug=args.debug, print_board=args.board)
+    p.match()
 
 
 if __name__ == '__main__':
