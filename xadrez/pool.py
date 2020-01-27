@@ -13,11 +13,11 @@ class Pool():
         self.RESULT_WIN_WHITE = 1
         self.RESULT_WIN_BLACK = 2
 
-        self.proc1 = subprocess.Popen([bot1],
+        self.proc1 = subprocess.Popen(bot1,
                                       stdout=subprocess.PIPE, stdin=subprocess.PIPE,
                                       stderr=subprocess.PIPE)
 
-        self.proc2 = subprocess.Popen([bot2],
+        self.proc2 = subprocess.Popen(bot2,
                                       stdout=subprocess.PIPE, stdin=subprocess.PIPE,
                                       stderr=subprocess.PIPE)
 

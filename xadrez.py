@@ -14,9 +14,9 @@ def parser_args():
                         default='rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
     _required = parser.add_argument_group('Required args')
     _required.add_argument('-b1', '--bot1', help='Executable bot 1',
-                           action='store', required=True)
+                           action='store', required=True, nargs='+')
     _required.add_argument('-b2', '--bot2', help='Executable bot 2',
-                           action='store', required=True)
+                           action='store', required=True, nargs='+')
     args = parser.parse_args()
     return args
 
