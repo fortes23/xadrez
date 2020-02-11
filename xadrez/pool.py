@@ -27,6 +27,10 @@ class Pool():
         self.print_board = print_board
         self.last_result = self.RESULT_UNKNOWN
 
+    def __del__(self):
+        self.proc1.kill()
+        self.proc2.kill()
+
     def reset_chess_board(self, new_fen=None):
         if new_fen:
             self.board = chess.Board(new_fen)
