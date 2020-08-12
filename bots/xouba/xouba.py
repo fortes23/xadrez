@@ -4,6 +4,7 @@
 import sys
 import os
 import json
+import argparse
 
 import chess
 
@@ -34,6 +35,15 @@ class Xouba(Fish):
         return res
 
 
-x = Xouba(os.path.dirname(os.path.realpath(__file__)) + '/xouba.json', 3)
+def parser_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-j', '--json', help='Show board', action='store',
+                        default=os.path.dirname(os.path.realpath(__file__)) + '/xouba.json')
+    args = parser.parse_args()
+    return args
+
+
+args = parser_args()
+x = Xouba(args.json, 3)
 while True:
     x.cycle()
